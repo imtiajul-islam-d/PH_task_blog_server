@@ -10,7 +10,7 @@ app.use(express.json());
 // Middleware end
 
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ibovumw.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.xbnuhk5.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -21,6 +21,18 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const blogsCollection = client.db("blog").collection("blogs");
+    // post a blog
+    app.post("/postBlog", async (req, res) => {
+      const blog = req.body;
+      const result = await blogsCollection.insertOne(blog);
+      res.send(result);
+    });
+    // get all blogs
+    app.get("/getBlog", async (req, res) => {
+      const query = {};
+      const result = await blogsCollection.find(query).toArray();
+      res.send(result);
+    });
   } finally {
   }
 }
