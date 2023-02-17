@@ -34,7 +34,7 @@ async function run() {
       res.send(result);
     });
     // update blog
-    app.get("/updateBlog/:id", async (req, res) => {
+    app.put("/updateBlog/:id", async (req, res) => {
       const id = req.params.id;
       const updatedBlog = req.body;
       const filter = { _id: new ObjectId(id) };
