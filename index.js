@@ -34,14 +34,18 @@ async function run() {
       res.send(result);
     });
     // update blog
-    // app.get("/updateBlog/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const updatedBlog = req.body;
-    //   const filter = { _id: new ObjectId(id) };
-    //   const query = {};
-    //   const result = await blogsCollection.find(query).toArray();
-    //   res.send(result);
-    // });
+    app.get("/updateBlog/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedBlog = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const updatedDocument = {
+        $set: {
+          blog: updatedBlog,
+        },
+      };
+      const result = await blogsCollection.updateOne(filter, updatedDocument);
+      res.send(result);
+    });
     // delete a blog
     app.delete("/deleteBlog/:id", async (req, res) => {
       const id = req.params.id;
